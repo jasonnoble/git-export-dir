@@ -1,0 +1,7 @@
+git export-dir - Export one or more directories from a git repo
+
+  git export-dir repo [-i] [dir1] [dir2] ... [dir3]
+  
+    -i                              Interactive mode
+    -h, --help                      Displays this help message
+        --version                   Show version

@@ -1,0 +1,41 @@
+#!/usr/bin/env ruby -wKU
+require File.join(File.dirname(__FILE__), '../lib/git.rb')
+require 'optparse'
+
+options = {:working_dir => "/tmp/git-exporter-#{$$}", :directories => [] }
+OptionParser.new do |opts|
+  opts.banner = "Git exportdir - Export one or more directories from a git repo."
+  
+  opts.separator ''
+  
+  opts.on_tail('-h', '--help', 'Displays this help message') do
+    puts opts
+    exit
+  end
+  
+  opts.on_tail("--version", "Show version") do
+    puts 'git export-dir version ' + Git::ExportDir.version
+    exit
+  end
+
+  opts.on('-i', '--interactive', 'Interactive Mode') do |limit|
+    options[:interactive] = true
+  end
+  
+  opts.on('-d', '--directory', String, 'Directory to copy') do |directory|
+    options[:directories] << directory
+  end
+  
+  opts.on('-r', '--repo [Git Repo]',
+          'Repository to clone') do |repository|
+    options[:repository] = repository
+  end
+end.parse!
+
+ARGV.each do |dirname|
+  options[:directories] << dirname
+end
+
+opts = options.map{|k,v| "\t#{k}=#{v}"}.join("\n")
+puts "Options: \n#{opts}\n"
+Git::ExportDir.new(options).export
