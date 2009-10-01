@@ -29,10 +29,6 @@ end
 
 task :default => :spec
 
-task :make => :make_spec do
-  system("./bin/git-exportdir --help > README && git changelog -a --no-limit > HISTORY")
-end
-
 desc "Run specs"
 Spec::Rake::SpecTask.new do |t|
   t.spec_files = FileList['spec/**/*_spec.rb']
@@ -50,6 +46,7 @@ end
 
 desc "create a gemspec file"
 task :make_spec do
+  system("./bin/git-exportdir --help > README && git changelog -a --no-limit > HISTORY")
   File.open("#{GEM}.gemspec", "w") do |file|
     file.puts spec.to_ruby
   end
