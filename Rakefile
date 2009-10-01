@@ -6,7 +6,7 @@ require 'spec/rake/spectask'
 
 require 'lib/git'
 
-GEM = "export-dir"
+GEM = "git-export-dir"
 GEM_VERSION = Git::ExportDir.version
 AUTHORS = "Jason Noble", "Rahsun McAfee"
 SUMMARY = "A gem that provides git export functionality for one or more directories in a Repo"
@@ -24,7 +24,7 @@ spec = Gem::Specification.new do |s|
   
   s.require_path = 'lib'
   s.autorequire = GEM
-  s.files = %w(LICENSE README Rakefile) + Dir.glob("{bin,lib,spec}/**/*")
+  s.files = %w(LICENSE README INSTALL Rakefile) + Dir.glob("{bin,lib,spec}/**/*")
 end
 
 task :default => :spec

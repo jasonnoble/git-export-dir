@@ -1,0 +1,12 @@
+To Install this gem:
+
+  gem sources -a http://gems.github.com
+  gem install jasonnoble-git-export-dir
+  
+To build manually:
+
+  git clone git://github.com/jasonnoble/git-export-dir.git
+  rake gem
+  gem install pkg/git-export-dir-*.gem
+  
+  
