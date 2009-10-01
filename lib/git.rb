@@ -4,7 +4,7 @@ require 'fileutils'
 
 module Git
   class ExportDir
-    VERSION = '0.0.4'
+    VERSION = '0.0.5'
 
     attr_reader :options
     def initialize(options = {})
