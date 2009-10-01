@@ -4,7 +4,7 @@ require 'fileutils'
 
 module Git
   class ExportDir
-    VERSION = '0.0.1'
+    VERSION = '0.0.3'
 
     attr_reader :options
     def initialize(options = {})
@@ -21,6 +21,7 @@ module Git
         exit 1
       end
       copy_directories(options[:working_dir])
+      cleanup(options[:working_dir])
     end
 
     private
@@ -33,7 +34,7 @@ module Git
       return false if err.any?
       return true
     end
-    
+
     def copy_directories(source_directory)
       Dir.new(source_directory).each{ |filename| 
         if filename =~ /^\.{1,2}$/ || filename =~ /^.git$/
@@ -54,10 +55,19 @@ module Git
         end
       }
     end
-    
-    def copy_file(source, destination)
-      puts "Copying #{options[:repository]}/#{source}"
-      FileUtils.cp_r(options[:working_dir] + '/' + source, destination)
+
+    def cleanup(source_directory)
+      print "Remove temp directory (#{filename})? [y/N]: "
+      answer = STDIN.gets.chomp
+      if answer =~ /y/i
+        FileUtils.rm_r(source_directory)
+      end
     end
   end
+
+  def copy_file(source, destination)
+    puts "Copying #{options[:repository]}/#{source}"
+    FileUtils.cp_r(options[:working_dir] + '/' + source, destination)
+  end
+end
 end
