@@ -63,11 +63,10 @@ module Git
         FileUtils.rm_r(source_directory)
       end
     end
-  end
 
-  def copy_file(source, destination)
-    puts "Copying #{options[:repository]}/#{source}"
-    FileUtils.cp_r(options[:working_dir] + '/' + source, destination)
+    def copy_file(source, destination)
+      puts "Copying #{options[:repository]}/#{source}"
+      FileUtils.cp_r(options[:working_dir] + '/' + source, destination)
+    end
   end
-end
 end
