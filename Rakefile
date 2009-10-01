@@ -46,7 +46,8 @@ end
 
 desc "create a gemspec file"
 task :make_spec do
-  system("./bin/git-exportdir --help > README && git changelog -a --no-limit > HISTORY")
+  system("./bin/git-exportdir --help > README")
+  system("git changelog -a --no-limit > HISTORY")
   File.open("#{GEM}.gemspec", "w") do |file|
     file.puts spec.to_ruby
   end
