@@ -40,24 +40,24 @@ module Git
           next
         end
         if options[:directories].include?(filename)
-          copy_file(options[:working_dir] + '/' + filename, ".")
+          copy_file(filename, ".")
         elsif options[:interactive]
           print "Copy #{filename}? [y/N]: "
           answer = STDIN.gets.chomp
           if answer =~ /y/i
-            copy_file(options[:working_dir] + '/' + filename, ".")
+            copy_file(filename, ".")
           else
-            puts "Skipping #{filename}"
+            puts "Skipping #{options[:repository]}/#{filename}"
           end
         else
-          puts "Skipping #{filename}"
+          puts "Skipping #{options[:repository]}/#{filename}"
         end
       }
     end
     
     def copy_file(source, destination)
-      puts "Copying #{source}"
-      FileUtils.cp_r(source, destination)
+      puts "Copying #{options[:repository]}/#{source}"
+      FileUtils.cp_r(options[:working_dir] + '/' + source, destination)
     end
   end
 end

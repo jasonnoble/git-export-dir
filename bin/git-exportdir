@@ -22,6 +22,10 @@ OptionParser.new do |opts|
     options[:interactive] = true
   end
   
+  opts.on('--debug', 'Debug Mode') do |limit|
+    options[:debug] = true
+  end
+  
   opts.on('-d', '--directory', String, 'Directory to copy') do |directory|
     options[:directories] << directory
   end
@@ -32,10 +36,14 @@ OptionParser.new do |opts|
   end
 end.parse!
 
+options[:repository] ||= ARGV.shift
+
 ARGV.each do |dirname|
   options[:directories] << dirname
 end
 
-opts = options.map{|k,v| "\t#{k}=#{v}"}.join("\n")
-puts "Options: \n#{opts}\n"
+if options[:debug]
+  opts = options.map{|k,v| "\t#{k}=#{v}"}.join("\n")
+  puts "Options: \n#{opts}\n"
+end
 Git::ExportDir.new(options).export
